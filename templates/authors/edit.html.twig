@@ -1,0 +1,56 @@
+{#{% extends 'base.html.twig' %}#}
+
+{#{% block body %}#}
+{#    <div class="col d-flex justify-content-center">#}
+{#        <div >#}
+{#            <img class="d-flex justify-content-center" width="250px" height="250px"#}
+{#                 src="{{ asset('./images/author.jpeg') }}"/>#}
+{#            <div class="d-flex justify-content-center">#}
+{#                <p class="card-text">Now you can change smthng in Author # <b>{{ data.id }}</b>.</p>#}
+{#            </div>#}
+{#            <div class="col d-flex justify-content-center" style="width: 20px">#}
+{#                {{ form_start(form) }}#}
+{#                <div class="mt-2 d-flex justify-content-center">#}
+{#                    {{ form_row(form.name,{attr: {  value:data.name } }) }}#}
+{#                </div>#}
+
+{#                <div class="mt-2 d-flex justify-content-center">#}
+{#                    {{ form_row(form.surname, {attr: {  value:data.surname } }) }}#}
+{#                </div>#}
+{#                <div class="mt-2 d-flex justify-content-center">#}
+{#                    {{ form_row(form.middlename, {attr: {  value:data.middlename } }) }}#}
+{#                </div>#}
+
+{#                <input class=" btn btn-success mt-3" type="submit" name="submit" value="Change">#}
+{#                {{ form_start(form) }}#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+
+
+{#{% endblock %}#}
+
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="col d-flex justify-content-center">
+        <div >
+            <img class="d-flex justify-content-center"
+                 src="{{ asset('./images/author.jpeg') }}"     width="250px" height="250px"       />
+            <div class="d-flex justify-content-center">
+                <p class="card-text">Now you can change smthng in author.</p>
+            </div>
+            <div class="d-flex justify-content-center" style="width: 20px">
+                {{ form_start(form) }}
+                <input class=" btn btn-success mt-3" type="submit" name="submit" value="Create">
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+

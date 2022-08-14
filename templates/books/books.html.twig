@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+{% block content %}
+    <div class="btn-group">
+        <a href="{{ path('addBook') }}" class="btn btn-secondary btn-sm mb-4" style=" margin-left: 10px">Add New</a>
+    </div>
+
+    <form class=" my-2 my-lg-0" style="margin: 10px; width: 200px; height: 40px; display: flex"
+{#          action="{{ path('blog_search') }}" #}
+          method="post">
+        <input class="form-control mr-sm-2" type="search" name="search">
+        <button class="btn btn-default my-2 my-sm-0" type="submit">Поиск</button>
+    </form>
+
+    <div style="margin-top: 20px; display: flex">
+        {% for data in data %}
+            <div style="border-left: 1px solid black; margin-right: 20px; margin-left: 10px">
+                {% if data.img =='' %}
+                    <a href="{{ path('showBook',{'id':data.id}) }}">
+                        <img class="bd-placeholder-img card-img-top" width="225px" height="225px"
+                             src="{{ asset('./images/book.jpeg') }}"/>
+                    </a>
+
+
+                {% else %}
+                    <a href="{{ path('showBook',{'id':data.id}) }}">
+                        <img class="bd-placeholder-img card-img-top" width="225px" height="225px"
+                                src="{{ asset('./images/' ~ data.img) }}">
+
+                    </a>
+                {% endif %}
+                <p> Название книги: {{ data.title }}  </p>
+                <p> Автор книги:{{ data.author }}  </p>
+                <p> Описание книги:{{ data.description }}  </p>
+                <p> Дата:{{ data.year }}  </p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                        <a href="
+ {{ path('deleteBook',{'id':data.id}) }}
+" class="btn btn-secondary btn-sm">Delete</a>
+                        <a href="
+ {{ path('editBook',{'id':data.id}) }}
+" class="btn btn-sm btn-outline-secondary">Edit</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

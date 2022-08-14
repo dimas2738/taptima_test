@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MachineController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+<div class="example-wrapper">
+    <h1 style="text-align: center">Hello {{ controller_name }}! ✅</h1>
+</div>
+{% endblock %}
+{% block content %}
+
+
+        <div class="col">
+            <div class="card shadow-sm  ">
+                
+                <div class="card-body">
+                    <img class="card-text" width="250px" height="250px"  src="{{ asset(data.img) }}"/>
+
+                    <p class="card-text">This is a book # {{ data.id }} .</p>
+                    <p class="card-text">Year: {{ data.year}}</p>
+                    <p class="card-text">Title: {{data.title }} </p>
+                    <p class="card-text">Author: {{ data.author }}</p>
+                    <p class="card-text">Description: {{data.description}} </p>
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <a href="{{ path('deleteBook',{'id':data.id}) }}" class="btn btn-secondary btn-sm" >Delete</a>
+                            <a href="{{ path('editBook',{'id':data.id}) }}" class="btn btn-sm btn-outline-secondary">Edit</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+{% endblock %}
