@@ -15,7 +15,6 @@ class EditAuthorType extends AbstractType
             ->add('name')
             ->add('middlename')
             ->add('surname');
-        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

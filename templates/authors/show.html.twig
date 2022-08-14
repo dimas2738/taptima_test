@@ -16,16 +16,12 @@
 
         <div class="col">
             <div class="card shadow-sm  ">
-                
                 <div class="card-body">
                     <img class="card-text" width="250px" height="250px"  src="{{ asset('./images/author.jpeg') }}"/>
-
                     <p class="card-text">This is a Author # {{ data.id }} .</p>
                     <p class="card-text">Имя: {{ data.name}}</p>
                     <p class="card-text">Фамилия: {{data.surname }} </p>
                     <p class="card-text">Отчество: {{ data.middlename }}</p>
-
-
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group">
                             <a href="{{ path('deleteAuthor',{'id':data.id}) }}" class="btn btn-secondary btn-sm" >Delete</a>

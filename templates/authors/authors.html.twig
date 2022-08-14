@@ -4,26 +4,17 @@
         <a href="{{ path('addAuthor') }}" class="btn btn-secondary btn-sm mb-4 " style=" margin-left: 10px">Add New</a>
     </div>
     <div style="display: flex">
-
-
-
         {% for data in data %}
-
             <div   style="border-left: 1px solid black; margin-right: 20px; margin-left: 10px">
                     <a href="{{ path('showAuthor',{'id':data.id}) }}">
                         <img class="bd-placeholder-img card-img-top" width="225px" height="225px"
                              src="{{ asset('./images/author.jpeg') }}"/>
                     </a>
-
-
                 <p> Фамилия:{{ data.surname }}  </p>
                 <p> Имя: {{ data.name }}  </p>
-
                 <p> Отчество:{{ data.middlename }}  </p>
                 <br>
-
                 <p> Количество книг выданных нашей библиотекой:{{ data.getCount ?? '0' }}  </p>
-
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
                         <a href="

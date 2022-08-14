@@ -38,12 +38,11 @@ class Authors
      */
     private $books_count;
 
-
-
     public function getCount(): ?int
     {
         return $this->books_count;
     }
+
     public function setCount(int $books_count): self
     {
         $this->books_count = $books_count;
@@ -92,7 +91,8 @@ class Authors
         return $this;
     }
 
-    public function __toString() {
+    public function __toString()
+    {
         return $this->surname;
     }
 }

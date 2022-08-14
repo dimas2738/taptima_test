@@ -6,7 +6,6 @@ use App\Entity\Books;
 
 use App\Form\AddBookFormType;
 use Doctrine\Persistence\ManagerRegistry;
-use mysql_xdevapi\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,10 +15,8 @@ class BooksController extends AbstractController
     /**
     * @Route("/", name="books")
     */
-
     public function index(ManagerRegistry $doctrine): Response
     {
-
         $entityManager=$doctrine->getRepository(Books::class)->findAll();
         return $this->render('books/books.html.twig', [
             'data' => $entityManager,
@@ -31,11 +28,8 @@ class BooksController extends AbstractController
     /**
      * @Route("/addBook", name="addBook")
      */
-
-
     public function addBook(Request $request, ManagerRegistry $doctrine): Response
     {
-
         $book = new Books();
         $form = $this->createForm(AddBookFormType::class, $book);
         $form->handleRequest($request);
@@ -63,15 +57,10 @@ class BooksController extends AbstractController
 
 //            books_count_author
 
-
             $author = $doctrine->getRepository(Authors::class)->findOneBy(['surname' => $author]);
             $author->setCount($author->getCount()+1);
             $entityManager->persist($author);
             $entityManager->flush();
-
-
-
-
 
             return $this->redirect('/');
         }
@@ -79,10 +68,10 @@ class BooksController extends AbstractController
             'form' => $form->createView()
         ));
     }
+
     /**
      * @Route("/books/{id}", name="showBook")
      */
-
     public function showBook(ManagerRegistry $doctrine, $id): Response
     {
         $entityManager = $doctrine->getRepository(Books::class)->findOneBy(['id' => $id]);
@@ -93,6 +82,7 @@ class BooksController extends AbstractController
                 'data' => $entityManager,
             ]);
     }
+
     /**
      * @Route("/delBook/{id}", name="deleteBook")
      */
@@ -100,23 +90,19 @@ class BooksController extends AbstractController
     {
 
             $bookToDel = $doctrine->getRepository(Books::class)->findOneBy(['id' => $id]);
-
-
             $entityManager = $doctrine->getManager();
             $entityManager->remove($bookToDel);
             $entityManager->flush();
 
-
-
             return $this->redirect('/');
         }
+
     /**
      * @Route("/editBook/{id}", name="editBook")
      */
     public function editBook(Request $request, ManagerRegistry $doctrine, $id): Response
     {
         $book = $doctrine->getRepository(Books::class)->findOneBy(['id' => $id]);
-
 
         $form = $this->createForm(AddBookFormType::class, $book);
         $form->handleRequest($request);
@@ -128,7 +114,6 @@ class BooksController extends AbstractController
             $description_form = $form->getData()->getDescription();
             $img_form = $form->getData()->getImg();
             $year_form = $form->getData()->getYear();
-
 
             //execute
             $entityManager = $doctrine->getManager();

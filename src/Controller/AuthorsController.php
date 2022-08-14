@@ -13,27 +13,21 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AuthorsController extends AbstractController
 {
-
-
-
     /**
     * @Route("/authors", name="authors")
     */
 
     public function index(ManagerRegistry $doctrine): Response
     {
-
-
         $entityManager=$doctrine->getRepository(Authors::class)->findAll();
         return $this->render('authors/authors.html.twig', [
             'data' => $entityManager,
         ]);
     }
+
     /**
      * @Route("/addAuthor", name="addAuthor")
      */
-
-
     public function addAuthor(Request $request, ManagerRegistry $doctrine): Response
     {
 
@@ -44,8 +38,6 @@ class AuthorsController extends AbstractController
             $name = $form->getData()->getName();
             $surname = $form->getData()->getSurname();
             $middlename = $form->getData()->getMiddlename();
-
-
 
             $entityManager = $doctrine->getManager();
             $author->setName($name)->setSurname($surname)
@@ -58,10 +50,10 @@ class AuthorsController extends AbstractController
             'form' => $form->createView()
         ));
     }
+
     /**
      * @Route("/authors/{id}", name="showAuthor")
      */
-
     public function showAuthor(ManagerRegistry $doctrine, $id): Response
     {
         $entityManager = $doctrine->getRepository(Authors::class)->findOneBy(['id' => $id]);
@@ -72,6 +64,7 @@ class AuthorsController extends AbstractController
                 'data' => $entityManager,
             ]);
     }
+
     /**
      * @Route("/delAuthor/{id}", name="deleteAuthor")
      */
@@ -79,13 +72,12 @@ class AuthorsController extends AbstractController
     {
 
             $authorToDel = $doctrine->getRepository(Authors::class)->findOneBy(['id' => $id]);
-
-
             $entityManager = $doctrine->getManager();
             $entityManager->remove($authorToDel);
             $entityManager->flush();
             return $this->redirect('/authors');
         }
+
     /**
      * @Route("/editAuthor/{id}", name="editAuthor")
      */
@@ -95,7 +87,6 @@ class AuthorsController extends AbstractController
         $form = $this->createForm(EditAuthorType::class, $author);
         $form->handleRequest($request);
 
-//
         if ($form->isSubmitted() && $form->isValid()) {
 
             //get data from form

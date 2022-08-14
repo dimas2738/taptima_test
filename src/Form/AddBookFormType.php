@@ -12,6 +12,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+
 class AddBookFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -20,7 +21,7 @@ class AddBookFormType extends AbstractType
             ->add('title')
             ->add('author', EntityType::class, [
                 'class' => Authors::class,
-                'query_builder' => function (AuthorRepository  $er) {
+                'query_builder' => function (AuthorRepository $er) {
 
 
                 },
@@ -30,9 +31,8 @@ class AddBookFormType extends AbstractType
 
             ])
             ->add('description')
-            ->add('img', FileType::class, array('data_class'=> null, 'label' => 'Image','required' => false, 'mapped' => false))
-            ->add('year')
-        ;
+            ->add('img', FileType::class, array('data_class' => null, 'label' => 'Image', 'required' => false, 'mapped' => false))
+            ->add('year');
     }
 
     public function configureOptions(OptionsResolver $resolver): void
