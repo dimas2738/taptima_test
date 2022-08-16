@@ -34,7 +34,7 @@ class Authors
     private $middlename;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer",options={"default" : 0},nullable=true)
      */
     private $books_count;
 

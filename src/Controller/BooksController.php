@@ -12,14 +12,20 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class BooksController extends AbstractController
 {
+    public $entityManager;
+    public function __construct(ManagerRegistry $doctrine)
+    {
+        return $this->entityManager=$doctrine->getRepository(Books::class);
+    }
+
     /**
     * @Route("/", name="books")
     */
     public function index(ManagerRegistry $doctrine): Response
     {
-        $entityManager=$doctrine->getRepository(Books::class)->findAll();
+
         return $this->render('books/books.html.twig', [
-            'data' => $entityManager,
+            'data' =>  $this->entityManager->findAll()
         ]);
     }
 
@@ -74,12 +80,10 @@ class BooksController extends AbstractController
      */
     public function showBook(ManagerRegistry $doctrine, $id): Response
     {
-        $entityManager = $doctrine->getRepository(Books::class)->findOneBy(['id' => $id]);
-
         return
             $this->render('books/show.html.twig', [
                 'controller_name' => 'BooksController',
-                'data' => $entityManager,
+                'data' => $this->entityManager->findOneBy(['id' => $id]),
             ]);
     }
 
@@ -89,7 +93,7 @@ class BooksController extends AbstractController
     public function deleteBook(ManagerRegistry $doctrine, $id): Response
     {
 
-            $bookToDel = $doctrine->getRepository(Books::class)->findOneBy(['id' => $id]);
+            $bookToDel =$this->entityManager->findOneBy(['id' => $id]);
             $entityManager = $doctrine->getManager();
             $entityManager->remove($bookToDel);
             $entityManager->flush();
@@ -102,7 +106,7 @@ class BooksController extends AbstractController
      */
     public function editBook(Request $request, ManagerRegistry $doctrine, $id): Response
     {
-        $book = $doctrine->getRepository(Books::class)->findOneBy(['id' => $id]);
+        $book = $this->entityManager->findOneBy(['id' => $id]);
 
         $form = $this->createForm(AddBookFormType::class, $book);
         $form->handleRequest($request);
@@ -123,9 +127,9 @@ class BooksController extends AbstractController
             $entityManager->flush();
             return $this->redirect('/');
         }
-        $data = $doctrine->getRepository(Books::class)->findOneBy(['id' => $id]);
+     
         return $this->render('books/edit.html.twig', array(
-            'form' => $form->createView(), 'data' => $data
+            'form' => $form->createView(), 'data' => $this->entityManager->findOneBy(['id' => $id])
         ));
     }
 
@@ -135,6 +139,8 @@ class BooksController extends AbstractController
         // uniqid(), which is based on timestamps
         return md5(uniqid());
     }
+
+
 
 }
 

@@ -13,13 +13,19 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AuthorsController extends AbstractController
 {
+    public $entity;
+    public function __construct(ManagerRegistry $doctrine)
+    {
+        return $this->entity=$doctrine->getRepository(Authors::class);
+    }
+
     /**
     * @Route("/authors", name="authors")
     */
 
     public function index(ManagerRegistry $doctrine): Response
     {
-        $entityManager=$doctrine->getRepository(Authors::class)->findAll();
+        $entityManager=$this->entity->findAll();
         return $this->render('authors/authors.html.twig', [
             'data' => $entityManager,
         ]);
@@ -38,10 +44,11 @@ class AuthorsController extends AbstractController
             $name = $form->getData()->getName();
             $surname = $form->getData()->getSurname();
             $middlename = $form->getData()->getMiddlename();
+            $bc=0;
 
             $entityManager = $doctrine->getManager();
             $author->setName($name)->setSurname($surname)
-                ->setMiddlename($middlename);
+                ->setMiddlename($middlename)->setCount($bc);
             $entityManager->persist($author);
             $entityManager->flush();
             return $this->redirect('/authors');
@@ -56,7 +63,7 @@ class AuthorsController extends AbstractController
      */
     public function showAuthor(ManagerRegistry $doctrine, $id): Response
     {
-        $entityManager = $doctrine->getRepository(Authors::class)->findOneBy(['id' => $id]);
+        $entityManager = $this->entity->findOneBy(['id' => $id]);
 
         return
             $this->render('authors/show.html.twig', [
@@ -71,7 +78,7 @@ class AuthorsController extends AbstractController
     public function deleteAuthor(ManagerRegistry $doctrine, $id): Response
     {
 
-            $authorToDel = $doctrine->getRepository(Authors::class)->findOneBy(['id' => $id]);
+            $authorToDel = $this->entity->findOneBy(['id' => $id]);
             $entityManager = $doctrine->getManager();
             $entityManager->remove($authorToDel);
             $entityManager->flush();
@@ -83,7 +90,7 @@ class AuthorsController extends AbstractController
      */
     public function editAuthor(Request $request, ManagerRegistry $doctrine, $id): Response
     {
-        $author = $doctrine->getRepository(Authors::class)->findOneBy(['id' => $id]);
+        $author = $this->entity->findOneBy(['id' => $id]);
         $form = $this->createForm(EditAuthorType::class, $author);
         $form->handleRequest($request);
 
@@ -101,7 +108,7 @@ class AuthorsController extends AbstractController
             $entityManager->flush();
             return $this->redirect('/authors');
         }
-        $data = $doctrine->getRepository(Authors::class)->findOneBy(['id' => $id]);
+        $data = $this->entity->findOneBy(['id' => $id]);
         return $this->render('authors/edit.html.twig',
             array(
             'form' => $form->createView(),
